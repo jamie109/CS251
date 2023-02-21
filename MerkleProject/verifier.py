@@ -81,6 +81,7 @@ if __name__ == "__main__":
 
     # Verify that proof length is correct
     height = len(proof.path)
+    print(height)
     assert height < MAXHEIGHT, "Proof is too long"
 
     # Verify proof
