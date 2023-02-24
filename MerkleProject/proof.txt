@@ -2,12 +2,12 @@ leaf position: 743
 leaf value: "data item 743"
 Hash values in proof:
   eEHTAiGd0uB3Nr7HfMyokoHGNstNJJ1cl8BHXqJjabU=
-  J4pdFr4raIfddrNYhM6AHZUwYct+ItvhieX7YcXkuSo=
-  uqrej2kVSmPdwnsj1G6GY2EuwapwUxxFWJ3Yy4sE/Os=
-  zNnbPMIaEwR2DVcfK+puXIyi0PV9em9AB7slpc8Dxgc=
-  zyaPWXRPzpS4wAHLhZuvUinnBc5P16vY6hk7LTCTcxA=
-  43r5mJoo28u+D3IBXs/NfZEaLlMM8KkQGrJev+N5xHk=
-  5IhB3ITdJPnSVptL+/ttFCZuSh41I3OZ91iJH1Hol0w=
-  SRMufUy/4RU8PhvvTDArnm5Ml9CAKuYa/HDpxfh3UTA=
-  T8Sd3QGxksqdmCzq//YrGl6Zm4qdsVz6JpbDmjQ+uxM=
-  jgYOqH4GHGHtvNxvyMKtHICozC6MUkJdIz1QMv1jRLk=
+  1od88dheyhsYbAw3AeHENlWVOixF1nnlkuVpWf/DuIk=
+  GTt1zzN3QSc/ZKZkDPDU8gIt7rNeHWGOxbSAIWIMu08=
+  Uu85JqSQKt79Ak890BOwcMJF6sagmI8taf6AFUdwgXE=
+  xZRRr3dgGStCLFvT86uFxU9GBUpJfiYqruJmgAKuRLA=
+  eSPos2WcT9g2+o5BKhywzRUn9gwEeqeMN3WtDFKBDEQ=
+  eMiymcq9RRZEj7niyVmvs3H3K8mTf0WkpQRD/Y4Wiss=
+  UywmG+lDotV4vQWdVWg7niAo0M+g+mARmS5DroiPN64=
+  ZeRQOymGQ+LM35f/bP24BpH9LVZE7ROwGHVxS95D/oQ=
+  twyFI3AqQo8V1ieqq8JEOHlihMEd4RDHelIGVlW2CTg=

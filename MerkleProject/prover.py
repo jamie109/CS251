@@ -52,6 +52,12 @@ def gen_merkle_proof(leaves, pos):
     结合 verifier.py 中的 compute_merkle_root_from_proof 函数，应该是要把从叶子节点的哈希开始（叶子节点的哈希要加进去），
     把跟它一起构成上一层它的父节点的兄弟节点（可能在它左边/右边），加到path中，然后进入上一层，也就是它的父节点那一层，
     把父节点的兄弟节点加进去（注意不加父节点，因为它可以通过两个子节点算出来），一直循环。
+    2023/02/24 update
+    只能感慨，无心插柳柳成荫。。。
+    一开始想错了，没有仔细看 verifier.py 中的 compute_merkle_root_from_proof 函数，
+    在这个函数中，要证明的叶子节点已经在proof: MerkleProof 中给出来了（47行）。
+    所以不能把要证明的叶子节点加进去，只加它的邻居节点即可。
+    然后进入height循环，每次循环都要重新计算新的哈希列表，根据pos//2选择要添加的哈希值，一直加到最后，注意根节点不需要加进去。
     """
     # 计算 Merkle Tree 的高度
     height = math.ceil(math.log(len(leaves),2))
@@ -68,70 +74,38 @@ def gen_merkle_proof(leaves, pos):
 
     # initialize a list that will contain the hashes in the proof
     path = []
-    # 叶子节点的哈希值
+    level_pos = pos    # local copy of pos
+    # 当前叶子节点的邻居加进去
     # path.append(state[pos])
     if pos % 2 == 0:
-        path.append(state[pos+1])
-    if pos % 2 == 1:
-        path.append(state[pos-1])
-    level_pos = pos    # local copy of pos
-    last_level_list = state
-    # print("state len",len(state))
+        path.append(state[pos + 1])
+    else:
+        path.append(state[pos - 1])
     # 注意，这个长度要用 state 的，不能用 leaves 的，因为 state 填充过，它的长度是2的整数次幂
+    # 记录当前层哈希的个数
     this_level_len = len(state)
-    for level in range(height):
-        """
-        from chatgpt but it doesn't work
-        # 获取当前节点的索引
-        index = pos >> level
 
-        # 如果索引是偶数，则右兄弟是下一个节点，否则左兄弟是下一个节点
-        if index % 2 == 0:
-            sibling_index = index + 1
-        else:
-            sibling_index = index - 1
-
-        # 如果节点没有兄弟，则使用自身哈希填充列表
-        if sibling_index >= 2 ** level + len(leaves):
-            sibling_hash = state[-1]
-        else:
-            sibling_hash = state[sibling_index]
-
-        # 将兄弟哈希添加到证明路径中
-        path.append(sibling_hash)
-        """
-        tmp_list = []
-        print("level-", level, "-----")
-        # 对前面一行计算哈希
+    for level in range(height-1):
+        tmp_state = []
+        # 对当前层 state 计算哈希
         for i in range(0, this_level_len - 1, 2):
-            # print(i)
-            if level_pos % 2 == 0 and level_pos == i:
-                # path.append(last_level_list[level_pos])
-                print("@@@one", level_pos)
-                path.append(last_level_list[level_pos + 1])
-            if  level_pos % 2 == 1 and level_pos == i - 1:
-                # path.append(last_level_list[level_pos])
-                print("@@@two", level_pos)
-                path.append(last_level_list[level_pos - 1])
-
-            tmp_list.append(hash_internal_node(last_level_list[i], last_level_list[i+1]))
-        last_level_list = tmp_list
-
-        print(len(tmp_list))
-        print("choosed",level_pos//2)
-        # 加入路径
-        # path.append(tmp_list[level_pos//2])
-        # print("now the path is",path)
-        level_pos = level_pos//2
-        this_level_len = this_level_len//2
+            tmp_state.append(hash_internal_node(state[i], state[i + 1]))
+        # 每向上一层，pos 减半
+        level_pos = level_pos // 2
+        # 根据 pos 选择要加进来的邻居节点
+        if level_pos % 2 == 0:
+            path.append(tmp_state[level_pos + 1])
+        else:
+            path.append(tmp_state[level_pos - 1])
+        # 更新 state 和它的长度
+        state = tmp_state
+        this_level_len = len(state)
 
 #######  YOUR CODE GOES HERE                              ######
 #######     to hash internal nodes in the tree use the    ######
 #######     function hash_internal_node(left,right)       ######
 
     # return a list of hashes that makes up the Merkle proof
-    print("the len of path is", len(path))
-    # print(path[-1])
     return path
 
 
